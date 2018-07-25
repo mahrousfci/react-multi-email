@@ -25,7 +25,6 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
     focused: false,
     emails: [],
     inputValue: '',
-    placeholder: '',
   };
 
   private emailInput: HTMLInputElement;
@@ -142,7 +141,7 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
           }}
           type="text"
           value={inputValue}
-          placeholder={emails.length?'':placeholder}
+          placeholder={((emails.length > 0) ? '' : placeholder )}
           onFocus={(e: any) => this.setState({ focused: true })}
           onBlur={(e: any) => {
             this.setState({ focused: false });

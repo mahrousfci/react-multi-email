@@ -2,9 +2,7 @@
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b)
-            if (b.hasOwnProperty(p))
-                d[p] = b[p]; };
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -13,31 +11,22 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var __read = (this && this.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m)
-        return o;
+    if (!m) return o;
     var i = m.call(o), r, ar = [], e;
     try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
-            ar.push(r.value);
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
     }
-    catch (error) {
-        e = { error: error };
-    }
+    catch (error) { e = { error: error }; }
     finally {
         try {
-            if (r && !r.done && (m = i["return"]))
-                m.call(i);
+            if (r && !r.done && (m = i["return"])) m.call(i);
         }
-        finally {
-            if (e)
-                throw e.error;
-        }
+        finally { if (e) throw e.error; }
     }
     return ar;
 };
 var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++)
-        ar = ar.concat(__read(arguments[i]));
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
     return ar;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -51,7 +40,6 @@ var ReactMultiEmail = /** @class */ (function (_super) {
             focused: false,
             emails: [],
             inputValue: '',
-            placeholder: '',
         };
         _this.findEmailAddress = function (value, isEnter) {
             var validEmails = [];
@@ -136,29 +124,31 @@ var ReactMultiEmail = /** @class */ (function (_super) {
     };
     ReactMultiEmail.prototype.render = function () {
         var _this = this;
-        var _a = this.state, focused = _a.focused, emails = _a.emails, inputValue = _a.inputValue, placeholder = _a.placeholder;
-        var _b = this.props, style = _b.style, getLabel = _b.getLabel;
+        var _a = this.state, focused = _a.focused, emails = _a.emails, inputValue = _a.inputValue;
+        var _b = this.props, style = _b.style, getLabel = _b.getLabel, placeholder = _b.placeholder;
         // removeEmail
         return (React.createElement("div", { className: 'react-multi-email ' + (focused ? 'focused' : ''), style: style, onClick: function (e) {
                 _this.emailInput.focus();
-            } }, emails.map(function (email, index) {
-            return getLabel(email, index, _this.removeEmail);
-        }), React.createElement("input", { ref: function (ref) {
-                if (ref) {
-                    _this.emailInput = ref;
-                }
-            }, type: "text", value: inputValue, placeholder: emails.length ? '' : placeholder, onFocus: function (e) { return _this.setState({ focused: true }); }, onBlur: function (e) {
-                _this.setState({ focused: false });
-                _this.findEmailAddress(e.target.value, true);
-            }, onChange: function (e) { return _this.onChangeInputValue(e.target.value); }, onKeyDown: function (e) {
-                if (e.which === 8 && !e.target.value) {
-                    _this.removeEmail(_this.state.emails.length - 1);
-                }
-            }, onKeyUp: function (e) {
-                if (e.which === 13) {
+            } },
+            emails.map(function (email, index) {
+                return getLabel(email, index, _this.removeEmail);
+            }),
+            React.createElement("input", { ref: function (ref) {
+                    if (ref) {
+                        _this.emailInput = ref;
+                    }
+                }, type: "text", value: inputValue, placeholder: ((emails.length > 0) ? '' : placeholder), onFocus: function (e) { return _this.setState({ focused: true }); }, onBlur: function (e) {
+                    _this.setState({ focused: false });
                     _this.findEmailAddress(e.target.value, true);
-                }
-            } })));
+                }, onChange: function (e) { return _this.onChangeInputValue(e.target.value); }, onKeyDown: function (e) {
+                    if (e.which === 8 && !e.target.value) {
+                        _this.removeEmail(_this.state.emails.length - 1);
+                    }
+                }, onKeyUp: function (e) {
+                    if (e.which === 13) {
+                        _this.findEmailAddress(e.target.value, true);
+                    }
+                } })));
     };
     return ReactMultiEmail;
 }(React.Component));
