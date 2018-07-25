@@ -1,5 +1,5 @@
 {
-  "name": "react-multi-email",
+  "name": "react-multi-email2",
   "version": "0.1.2",
   "dependencies": {
     "react": "^16.3.2",
@@ -18,8 +18,7 @@
     "file-loader": "^1.1.11",
     "node-sass": "^4.8.3",
     "raw-loader": "^0.5.1",
-    "react-app-rewire-css-modules":
-      "github:codebandits/react-app-rewire-css-modules",
+    "react-app-rewire-css-modules": "github:codebandits/react-app-rewire-css-modules",
     "react-app-rewire-hot-loader": "^1.0.1",
     "react-app-rewired": "^1.5.0",
     "react-ga": "^2.5.0",
