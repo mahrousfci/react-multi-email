@@ -139,7 +139,7 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
               this.emailInput = ref;
             }
           }}
-          type="text"
+          type="email"
           value={inputValue}
           placeholder={((emails.length > 0) ? '' : placeholder )}
           onFocus={(e: any) => this.setState({ focused: true })}
