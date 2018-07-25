@@ -17,6 +17,7 @@ export interface IReactMultiEmailState {
   propsEmails?: string[];
   emails?: string[];
   inputValue?: string;
+  placeholder: string;
 }
 
 class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
@@ -24,6 +25,7 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
     focused: false,
     emails: [],
     inputValue: '',
+    placeholder: '',
   };
 
   private emailInput: HTMLInputElement;
@@ -116,7 +118,7 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
   };
 
   render() {
-    const { focused, emails, inputValue } = this.state;
+    const { focused, emails, inputValue, placeholder } = this.state;
     const { style, getLabel } = this.props;
 
     // removeEmail
@@ -140,6 +142,7 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
           }}
           type="text"
           value={inputValue}
+          placeholder={emails.length?'':placeholder}
           onFocus={(e: any) => this.setState({ focused: true })}
           onBlur={(e: any) => {
             this.setState({ focused: false });
