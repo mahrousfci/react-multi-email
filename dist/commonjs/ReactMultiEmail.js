@@ -9,26 +9,6 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __read = (this && this.__read) || function (o, n) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m) return o;
-    var i = m.call(o), r, ar = [], e;
-    try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-    }
-    catch (error) { e = { error: error }; }
-    finally {
-        try {
-            if (r && !r.done && (m = i["return"])) m.call(i);
-        }
-        finally { if (e) throw e.error; }
-    }
-    return ar;
-};
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var isEmail_1 = require("./isEmail");
@@ -40,7 +20,6 @@ var ReactMultiEmail = /** @class */ (function (_super) {
             focused: false,
             emails: [],
             inputValue: '',
-            placeholder: '',
         };
         _this.findEmailAddress = function (value, isEnter) {
             var validEmails = [];
@@ -91,11 +70,11 @@ var ReactMultiEmail = /** @class */ (function (_super) {
                 }
             }
             _this.setState({
-                emails: __spread(_this.state.emails, validEmails),
+                emails: _this.state.emails.concat(validEmails),
                 inputValue: inputValue,
             });
             if (validEmails.length && _this.props.onChange) {
-                _this.props.onChange(__spread(_this.state.emails, validEmails));
+                _this.props.onChange(_this.state.emails.concat(validEmails));
             }
         };
         _this.onChangeInputValue = function (value) {
@@ -125,7 +104,7 @@ var ReactMultiEmail = /** @class */ (function (_super) {
     };
     ReactMultiEmail.prototype.render = function () {
         var _this = this;
-        var _a = this.state, focused = _a.focused, emails = _a.emails, inputValue = _a.inputValue, placeholder = _a.placeholder;
+        var _a = this.state, focused = _a.focused, emails = _a.emails, inputValue = _a.inputValue;
         var _b = this.props, style = _b.style, getLabel = _b.getLabel;
         // removeEmail
         return (React.createElement("div", { className: 'react-multi-email ' + (focused ? 'focused' : ''), style: style, onClick: function (e) {
@@ -138,7 +117,7 @@ var ReactMultiEmail = /** @class */ (function (_super) {
                     if (ref) {
                         _this.emailInput = ref;
                     }
-                }, type: "text", value: inputValue, placeholder: emails.length ? '' : placeholder, onFocus: function (e) { return _this.setState({ focused: true }); }, onBlur: function (e) {
+                }, type: "text", value: inputValue, onFocus: function (e) { return _this.setState({ focused: true }); }, onBlur: function (e) {
                     _this.setState({ focused: false });
                     _this.findEmailAddress(e.target.value, true);
                 }, onChange: function (e) { return _this.onChangeInputValue(e.target.value); }, onKeyDown: function (e) {
@@ -154,4 +133,3 @@ var ReactMultiEmail = /** @class */ (function (_super) {
     return ReactMultiEmail;
 }(React.Component));
 exports.default = ReactMultiEmail;
-//# sourceMappingURL=ReactMultiEmail.js.map
