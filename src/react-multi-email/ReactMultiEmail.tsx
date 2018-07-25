@@ -5,6 +5,7 @@ export interface IReactMultiEmailProps {
   emails?: string[];
   onChange?: (emails: string[]) => void;
   style?: object;
+  placeholder: string;
   getLabel: (
     email: string,
     index: number,
@@ -17,7 +18,6 @@ export interface IReactMultiEmailState {
   propsEmails?: string[];
   emails?: string[];
   inputValue?: string;
-  placeholder: string;
 }
 
 class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
@@ -118,8 +118,8 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
   };
 
   render() {
-    const { focused, emails, inputValue, placeholder } = this.state;
-    const { style, getLabel } = this.props;
+    const { focused, emails, inputValue } = this.state;
+    const { style, getLabel, placeholder } = this.props;
 
     // removeEmail
 
