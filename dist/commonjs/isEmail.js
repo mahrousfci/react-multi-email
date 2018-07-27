@@ -114,3 +114,4 @@ function isEmail(str, options) {
     return true;
 }
 exports.default = isEmail;
+//# sourceMappingURL=isEmail.js.map

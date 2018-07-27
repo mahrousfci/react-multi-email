@@ -22,6 +22,9 @@
     "downlevelIteration": true,
     "plugins": [{ "name": "typescript-styled-plugin" }]
   },
+  "include": [
+    "src/react-multi-email/*"
+  ],
   "exclude": [
     "node_modules",
     "build",
