@@ -74,6 +74,9 @@ function isFQDN(str, options) {
 }
 function isEmail(str, options) {
     options = __assign({}, options, defaultEmailOptions);
+	if (!/^[\x00-\x7F]+$/.test(str)) {
+		return false;
+	}
     if (options.requireDisplayName || options.allowDisplayName) {
         var displayEmail = str.match(displayName);
         if (displayEmail) {
