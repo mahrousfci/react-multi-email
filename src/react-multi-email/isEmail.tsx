@@ -1,29 +1,29 @@
 // forked from https://github.com/chriso/validator.js
 
 export interface IFqdnOptions {
-  requireTld?: boolean;
-  allowUnderscores?: boolean;
-  allowTrailingDot?: boolean;
+	requireTld?: boolean;
+	allowUnderscores?: boolean;
+	allowTrailingDot?: boolean;
 }
 
 export interface IEmailOptions {
-  allowDisplayName?: boolean;
-  requireDisplayName?: boolean;
-  allowUtf8LocalPart?: boolean;
-  requireTld?: boolean;
+	allowDisplayName?: boolean;
+	requireDisplayName?: boolean;
+	allowUtf8LocalPart?: boolean;
+	requireTld?: boolean;
 }
 
 const defaultFqdnOptions = {
-  requireTld: true,
-  allowUnderscores: false,
-  allowTrailingDot: false,
+	requireTld: true,
+	allowUnderscores: false,
+	allowTrailingDot: false
 };
 
 const defaultEmailOptions = {
-  allowDisplayName: false,
-  requireDisplayName: false,
-  allowUtf8LocalPart: true,
-  requireTld: true,
+	allowDisplayName: false,
+	requireDisplayName: false,
+	allowUtf8LocalPart: true,
+	requireTld: true
 };
 
 const displayName = /^[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~\.\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~\,\.\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s]*<(.+)>$/i;
@@ -34,108 +34,105 @@ const quotedEmailUserUtf8 = /^([\s\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5
 
 /* eslint-disable prefer-rest-params */
 function isByteLength(str: string, options: { min?: number; max?: number }) {
-  let min: number = 0;
-  let max: number | undefined;
-  const len = encodeURI(str).split(/%..|./).length - 1;
+	let min: number = 0;
+	let max: number | undefined;
+	const len = encodeURI(str).split(/%..|./).length - 1;
 
-  if (options) {
-    min = Number(options.min) || 0;
-    max = Number(options.max);
-  }
+	if (options) {
+		min = Number(options.min) || 0;
+		max = Number(options.max);
+	}
 
-  return len >= min && (typeof max === 'undefined' || len <= max);
+	return len >= min && (typeof max === 'undefined' || len <= max);
 }
 
 function isFQDN(str: string, options?: IFqdnOptions) {
-  options = { ...options, ...defaultFqdnOptions };
+	options = { ...options, ...defaultFqdnOptions };
 
-  /* Remove the optional trailing dot before checking validity */
-  if (options.allowTrailingDot && str[str.length - 1] === '.') {
-    str = str.substring(0, str.length - 1);
-  }
-  const parts = str.split('.');
+	/* Remove the optional trailing dot before checking validity */
+	if (options.allowTrailingDot && str[str.length - 1] === '.') {
+		str = str.substring(0, str.length - 1);
+	}
+	const parts = str.split('.');
 
-  if (options.requireTld) {
-    const tld: string = '' + parts.pop();
-    if (
-      !parts.length ||
-      !/^([a-z\u00a1-\uffff]{2,}|xn[a-z0-9-]{2,})$/i.test(tld)
-    ) {
-      return false;
-    }
-    // disallow spaces
-    if (/[\s\u2002-\u200B\u202F\u205F\u3000\uFEFF\uDB40\uDC20]/.test(tld)) {
-      return false;
-    }
-  }
+	if (options.requireTld) {
+		const tld: string = '' + parts.pop();
+		if (!parts.length || !/^([a-z\u00a1-\uffff]{2,}|xn[a-z0-9-]{2,})$/i.test(tld)) {
+			return false;
+		}
+		// disallow spaces
+		if (/[\s\u2002-\u200B\u202F\u205F\u3000\uFEFF\uDB40\uDC20]/.test(tld)) {
+			return false;
+		}
+	}
 
-  for (let part, i = 0; i < parts.length; i++) {
-    part = parts[i];
-    if (options.allowUnderscores) {
-      part = part.replace(/_/g, '');
-    }
-    if (!/^[a-z\u00a1-\uffff0-9-]+$/i.test(part)) {
-      return false;
-    }
-    // disallow full-width chars
-    if (/[\uff01-\uff5e]/.test(part)) {
-      return false;
-    }
-    if (part[0] === '-' || part[part.length - 1] === '-') {
-      return false;
-    }
-  }
-  return true;
+	for (let part, i = 0; i < parts.length; i++) {
+		part = parts[i];
+		if (options.allowUnderscores) {
+			part = part.replace(/_/g, '');
+		}
+		if (!/^[a-z\u00a1-\uffff0-9-]+$/i.test(part)) {
+			return false;
+		}
+		// disallow full-width chars
+		if (/[\uff01-\uff5e]/.test(part)) {
+			return false;
+		}
+		if (part[0] === '-' || part[part.length - 1] === '-') {
+			return false;
+		}
+	}
+	return true;
 }
 
 function isEmail(str: string, options?: IEmailOptions) {
-  options = { ...options, ...defaultEmailOptions };
+	options = { ...options, ...defaultEmailOptions };
 
-  if (options.requireDisplayName || options.allowDisplayName) {
-    const displayEmail = str.match(displayName);
-    if (displayEmail) {
-      str = displayEmail[1];
-    } else if (options.requireDisplayName) {
-      return false;
-    }
-  }
+	if (!/^[\x00-\x7F]+$/.test(str)) {
+		return false;
+	}
 
-  const parts: string[] = str.split('@');
-  const domain: string = '' + parts.pop();
-  const lowerDomain = domain.toLowerCase();
-  let user: string = parts.join('@');
+	if (options.requireDisplayName || options.allowDisplayName) {
+		const displayEmail = str.match(displayName);
+		if (displayEmail) {
+			str = displayEmail[1];
+		} else if (options.requireDisplayName) {
+			return false;
+		}
+	}
 
-  if (lowerDomain === 'gmail.com' || lowerDomain === 'googlemail.com') {
-    user = user.replace(/\./g, '').toLowerCase();
-  }
+	const parts: string[] = str.split('@');
+	const domain: string = '' + parts.pop();
+	const lowerDomain = domain.toLowerCase();
+	let user: string = parts.join('@');
 
-  if (!isByteLength(user, { max: 64 }) || !isByteLength(domain, { max: 254 })) {
-    return false;
-  }
+	if (lowerDomain === 'gmail.com' || lowerDomain === 'googlemail.com') {
+		user = user.replace(/\./g, '').toLowerCase();
+	}
 
-  if (!isFQDN(domain, { requireTld: options.requireTld })) {
-    return false;
-  }
+	if (!isByteLength(user, { max: 64 }) || !isByteLength(domain, { max: 254 })) {
+		return false;
+	}
 
-  if (user[0] === '"') {
-    user = user.slice(1, user.length - 1);
-    return options.allowUtf8LocalPart
-      ? quotedEmailUserUtf8.test(user)
-      : quotedEmailUser.test(user);
-  }
+	if (!isFQDN(domain, { requireTld: options.requireTld })) {
+		return false;
+	}
 
-  const pattern = options.allowUtf8LocalPart
-    ? emailUserUtf8Part
-    : emailUserPart;
-  const userParts = user.split('.');
+	if (user[0] === '"') {
+		user = user.slice(1, user.length - 1);
+		return options.allowUtf8LocalPart ? quotedEmailUserUtf8.test(user) : quotedEmailUser.test(user);
+	}
 
-  for (let i = 0; i < userParts.length; i++) {
-    if (!pattern.test(userParts[i])) {
-      return false;
-    }
-  }
+	const pattern = options.allowUtf8LocalPart ? emailUserUtf8Part : emailUserPart;
+	const userParts = user.split('.');
 
-  return true;
+	for (let i = 0; i < userParts.length; i++) {
+		if (!pattern.test(userParts[i])) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 export default isEmail;
