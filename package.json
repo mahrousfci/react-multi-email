@@ -1,6 +1,6 @@
 {
   "name": "react-multi-email2",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "dependencies": {
     "react": "^16.3.2",
     "react-dom": "^16.3.2"
@@ -39,21 +39,30 @@
   },
   "scripts": {
     "start": "react-app-rewired start --scripts-version react-scripts-ts",
-    "build":
-      "react-app-rewired build --scripts-version react-scripts-ts && rm -rf ./docs && mv build ./docs && cp ./src/CNAME ./docs/CNAME",
-    "dist-module":
-      "better-npm-run build:common && better-npm-run build:es5 && better-npm-run build:es6",
-    "test":
-      "react-app-rewired test --scripts-version react-scripts-ts --env=jsdom",
+    "build": "react-app-rewired build --scripts-version react-scripts-ts && rm -rf ./docs && mv build ./docs && cp ./src/CNAME ./docs/CNAME",
+    "dist-module": "better-npm-run build:common && better-npm-run build:es5 && better-npm-run build:es6",
+    "test": "react-app-rewired test --scripts-version react-scripts-ts --env=jsdom",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "publish": "cd dist && npm publish"
   },
   "betterScripts": {
-    "build:common":
-      "cp ./src/react-multi-email/style.css ./dist/style.css && cp ./README.md ./dist/README.md",
-    "build:es5":
-      "rm -rf ./dist/commonjs && tsc --outDir dist/commonjs --jsx react --module commonjs --target es5 --moduleResolution node",
-    "build:es6":
-      "rm -rf ./dist/es6 && tsc --outDir dist/es6 --jsx react --module es6 --target es6 --moduleResolution node"
-  }
+    "build:common": "cp ./src/react-multi-email/style.css ./dist/style.css && cp ./README.md ./dist/README.md",
+    "build:es5": "rm -rf ./dist/commonjs && tsc --outDir dist/commonjs --jsx react --module commonjs --target es5 --moduleResolution node",
+    "build:es6": "rm -rf ./dist/es6 && tsc --outDir dist/es6 --jsx react --module es6 --target es6 --moduleResolution node"
+  },
+  "description": "A simple react component to format multiple email as the user types.",
+  "main": "config-overrides.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mahrousfci/react-multi-email.git"
+  },
+  "author": "Mahmoud Mahrous <mahrous_fci@yahoo.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mahrousfci/react-multi-email/issues"
+  },
+  "homepage": "https://github.com/mahrousfci/react-multi-email#readme"
 }
