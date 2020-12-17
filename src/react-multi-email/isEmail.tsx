@@ -90,7 +90,16 @@ function isEmail(str: string, options?: IEmailOptions) {
 
 	if (!/^[\x00-\x7F]+$/.test(str)) {
 		return false;
-	}
+  }
+  else {
+    const punycode = require('punycode/');
+    const unicodeStr = punycode.decode(str);
+    console.log('unicode');
+    console.log(unicodeStr);
+    if (!/^[\x00-\x7F]+$/.test(unicodeStr)) {
+      return false;
+    }
+  }
 
 	if (options.requireDisplayName || options.allowDisplayName) {
 		const displayEmail = str.match(displayName);
