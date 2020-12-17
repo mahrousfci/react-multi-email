@@ -78,7 +78,7 @@ function isEmail(str, options) {
     }
     else {
         var punycode = require('punycode/');
-        var unicodeStr = punycode.decode(str);
+        var unicodeStr = punycode.toUnicode(str);
         console.log('unicode');
         console.log(unicodeStr);
         if (!/^[\x00-\x7F]+$/.test(unicodeStr)) {

@@ -46,8 +46,6 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
   }
 
   findEmailAddress = (value: string, isEnter?: boolean) => {
-    console.log(value);
-    debugger;
     let validEmails: string[] = [];
     let inputValue: string = '';
     const re = /[ ,;]/g;
@@ -69,8 +67,6 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
           return n !== '' && n !== undefined && n !== null;
         });
         do {
-          console.log(arr);
-          debugger;
           if (isEmail('' + arr[0])) {
             addEmails('' + arr.shift());
           } else {
@@ -83,8 +79,6 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
         } while (arr.length);
       } else {
         if (isEnter) {
-          console.log(value);
-          debugger;
           if (isEmail(value)) {
             addEmails(value);
           } else {
@@ -108,7 +102,6 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
 
   onChangeInputValue = (value: string) => {
     console.log(value);
-    debugger;
     this.findEmailAddress(value);
   };
 
@@ -153,7 +146,6 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
           onFocus={(e: any) => this.setState({ focused: true })}
           onBlur={(e: any) => {
             this.setState({ focused: false });
-            debugger;
             this.findEmailAddress(e.target.value, true);
           }}
           onChange={(e: any) => this.onChangeInputValue(e.target.value)}
@@ -164,7 +156,6 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
           }}
           onKeyUp={(e: any) => {
             if (e.which === 13) {
-              debugger;
               this.findEmailAddress(e.target.value, true);
             }
           }}
