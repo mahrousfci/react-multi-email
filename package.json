@@ -1,6 +1,6 @@
 {
   "name": "react-multi-email2",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "dependencies": {
     "react": "^16.3.2",
     "react-dom": "^16.3.2"

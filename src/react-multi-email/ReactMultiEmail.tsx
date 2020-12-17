@@ -153,7 +153,6 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
           onFocus={(e: any) => this.setState({ focused: true })}
           onBlur={(e: any) => {
             this.setState({ focused: false });
-            console.log(value);
             debugger;
             this.findEmailAddress(e.target.value, true);
           }}
@@ -165,7 +164,6 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
           }}
           onKeyUp={(e: any) => {
             if (e.which === 13) {
-              console.log(value);
               debugger;
               this.findEmailAddress(e.target.value, true);
             }

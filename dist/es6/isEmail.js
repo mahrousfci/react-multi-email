@@ -2,13 +2,13 @@
 const defaultFqdnOptions = {
     requireTld: true,
     allowUnderscores: false,
-    allowTrailingDot: false,
+    allowTrailingDot: false
 };
 const defaultEmailOptions = {
     allowDisplayName: false,
     requireDisplayName: false,
     allowUtf8LocalPart: true,
-    requireTld: true,
+    requireTld: true
 };
 const displayName = /^[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~\.\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~\,\.\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s]*<(.+)>$/i;
 const emailUserPart = /^[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~]+$/i;
@@ -35,8 +35,7 @@ function isFQDN(str, options) {
     const parts = str.split('.');
     if (options.requireTld) {
         const tld = '' + parts.pop();
-        if (!parts.length ||
-            !/^([a-z\u00a1-\uffff]{2,}|xn[a-z0-9-]{2,})$/i.test(tld)) {
+        if (!parts.length || !/^([a-z\u00a1-\uffff]{2,}|xn[a-z0-9-]{2,})$/i.test(tld)) {
             return false;
         }
         // disallow spaces
@@ -64,9 +63,18 @@ function isFQDN(str, options) {
 }
 function isEmail(str, options) {
     options = Object.assign({}, options, defaultEmailOptions);
-	if (!/^[\x00-\x7F]+$/.test(str)) {
-		return false;
-	}
+    if (!/^[\x00-\x7F]+$/.test(str)) {
+        return false;
+    }
+    else {
+        const punycode = require('punycode/');
+        const unicodeStr = punycode.decode(str);
+        console.log('unicode');
+        console.log(unicodeStr);
+        if (!/^[\x00-\x7F]+$/.test(unicodeStr)) {
+            return false;
+        }
+    }
     if (options.requireDisplayName || options.allowDisplayName) {
         const displayEmail = str.match(displayName);
         if (displayEmail) {
@@ -91,13 +99,9 @@ function isEmail(str, options) {
     }
     if (user[0] === '"') {
         user = user.slice(1, user.length - 1);
-        return options.allowUtf8LocalPart
-            ? quotedEmailUserUtf8.test(user)
-            : quotedEmailUser.test(user);
+        return options.allowUtf8LocalPart ? quotedEmailUserUtf8.test(user) : quotedEmailUser.test(user);
     }
-    const pattern = options.allowUtf8LocalPart
-        ? emailUserUtf8Part
-        : emailUserPart;
+    const pattern = options.allowUtf8LocalPart ? emailUserUtf8Part : emailUserPart;
     const userParts = user.split('.');
     for (let i = 0; i < userParts.length; i++) {
         if (!pattern.test(userParts[i])) {

@@ -9,6 +9,8 @@ class ReactMultiEmail extends React.Component {
             inputValue: '',
         };
         this.findEmailAddress = (value, isEnter) => {
+            console.log(value);
+            debugger;
             let validEmails = [];
             let inputValue = '';
             const re = /[ ,;]/g;
@@ -28,12 +30,13 @@ class ReactMultiEmail extends React.Component {
                         return n !== '' && n !== undefined && n !== null;
                     });
                     do {
+                        console.log(arr);
+                        debugger;
                         if (isEmail('' + arr[0])) {
                             addEmails('' + arr.shift());
                         }
                         else {
                             if (arr.length === 1) {
-                                /// 마지막 아이템이면 inputValue로 남겨두기
                                 inputValue = '' + arr.shift();
                             }
                             else {
@@ -44,6 +47,8 @@ class ReactMultiEmail extends React.Component {
                 }
                 else {
                     if (isEnter) {
+                        console.log(value);
+                        debugger;
                         if (isEmail(value)) {
                             addEmails(value);
                         }
@@ -65,6 +70,8 @@ class ReactMultiEmail extends React.Component {
             }
         };
         this.onChangeInputValue = (value) => {
+            console.log(value);
+            debugger;
             this.findEmailAddress(value);
         };
         this.removeEmail = (index) => {
@@ -90,7 +97,7 @@ class ReactMultiEmail extends React.Component {
     }
     render() {
         const { focused, emails, inputValue } = this.state;
-        const { style, getLabel, placeholder } = this.props;
+        const { style, getLabel, placeholder, disabled } = this.props;
         // removeEmail
         return (React.createElement("div", { className: 'react-multi-email ' + (focused ? 'focused' : ''), style: style, onClick: (e) => {
                 this.emailInput.focus();
@@ -100,8 +107,9 @@ class ReactMultiEmail extends React.Component {
                     if (ref) {
                         this.emailInput = ref;
                     }
-                }, type: "email", value: inputValue, placeholder: ((emails.length > 0) ? '' : placeholder), onFocus: (e) => this.setState({ focused: true }), onBlur: (e) => {
+                }, type: "email", value: inputValue, placeholder: ((emails.length > 0) ? '' : placeholder), disabled: disabled, onFocus: (e) => this.setState({ focused: true }), onBlur: (e) => {
                     this.setState({ focused: false });
+                    debugger;
                     this.findEmailAddress(e.target.value, true);
                 }, onChange: (e) => this.onChangeInputValue(e.target.value), onKeyDown: (e) => {
                     if (e.which === 8 && !e.target.value) {
@@ -109,6 +117,7 @@ class ReactMultiEmail extends React.Component {
                     }
                 }, onKeyUp: (e) => {
                     if (e.which === 13) {
+                        debugger;
                         this.findEmailAddress(e.target.value, true);
                     }
                 } })));

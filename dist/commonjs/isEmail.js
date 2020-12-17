@@ -76,6 +76,15 @@ function isEmail(str, options) {
     if (!/^[\x00-\x7F]+$/.test(str)) {
         return false;
     }
+    else {
+        var punycode = require('punycode/');
+        var unicodeStr = punycode.decode(str);
+        console.log('unicode');
+        console.log(unicodeStr);
+        if (!/^[\x00-\x7F]+$/.test(unicodeStr)) {
+            return false;
+        }
+    }
     if (options.requireDisplayName || options.allowDisplayName) {
         var displayEmail = str.match(displayName);
         if (displayEmail) {
