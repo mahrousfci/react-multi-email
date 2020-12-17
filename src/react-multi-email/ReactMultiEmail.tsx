@@ -101,7 +101,6 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
   };
 
   onChangeInputValue = (value: string) => {
-    console.log(value);
     this.findEmailAddress(value);
   };
 

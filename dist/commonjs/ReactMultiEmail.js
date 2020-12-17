@@ -97,7 +97,6 @@ var ReactMultiEmail = /** @class */ (function (_super) {
             }
         };
         _this.onChangeInputValue = function (value) {
-            console.log(value);
             _this.findEmailAddress(value);
         };
         _this.removeEmail = function (index) {
