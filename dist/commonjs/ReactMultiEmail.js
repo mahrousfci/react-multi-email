@@ -42,6 +42,8 @@ var ReactMultiEmail = /** @class */ (function (_super) {
             inputValue: '',
         };
         _this.findEmailAddress = function (value, isEnter) {
+            console.log(value);
+            debugger;
             var validEmails = [];
             var inputValue = '';
             var re = /[ ,;]/g;
@@ -61,12 +63,13 @@ var ReactMultiEmail = /** @class */ (function (_super) {
                         return n !== '' && n !== undefined && n !== null;
                     });
                     do {
+                        console.log(arr);
+                        debugger;
                         if (isEmail_1.default('' + arr[0])) {
                             addEmails('' + arr.shift());
                         }
                         else {
                             if (arr.length === 1) {
-                                /// 마지막 아이템이면 inputValue로 남겨두기
                                 inputValue = '' + arr.shift();
                             }
                             else {
@@ -77,6 +80,8 @@ var ReactMultiEmail = /** @class */ (function (_super) {
                 }
                 else {
                     if (isEnter) {
+                        console.log(value);
+                        debugger;
                         if (isEmail_1.default(value)) {
                             addEmails(value);
                         }
@@ -98,6 +103,8 @@ var ReactMultiEmail = /** @class */ (function (_super) {
             }
         };
         _this.onChangeInputValue = function (value) {
+            console.log(value);
+            debugger;
             _this.findEmailAddress(value);
         };
         _this.removeEmail = function (index) {
@@ -125,7 +132,7 @@ var ReactMultiEmail = /** @class */ (function (_super) {
     ReactMultiEmail.prototype.render = function () {
         var _this = this;
         var _a = this.state, focused = _a.focused, emails = _a.emails, inputValue = _a.inputValue;
-        var _b = this.props, style = _b.style, getLabel = _b.getLabel, placeholder = _b.placeholder;
+        var _b = this.props, style = _b.style, getLabel = _b.getLabel, placeholder = _b.placeholder, disabled = _b.disabled;
         // removeEmail
         return (React.createElement("div", { className: 'react-multi-email ' + (focused ? 'focused' : ''), style: style, onClick: function (e) {
                 _this.emailInput.focus();
@@ -137,8 +144,10 @@ var ReactMultiEmail = /** @class */ (function (_super) {
                     if (ref) {
                         _this.emailInput = ref;
                     }
-                }, type: "email", value: inputValue, placeholder: ((emails.length > 0) ? '' : placeholder), onFocus: function (e) { return _this.setState({ focused: true }); }, onBlur: function (e) {
+                }, type: "email", value: inputValue, placeholder: ((emails.length > 0) ? '' : placeholder), disabled: disabled, onFocus: function (e) { return _this.setState({ focused: true }); }, onBlur: function (e) {
                     _this.setState({ focused: false });
+                    console.log(value);
+                    debugger;
                     _this.findEmailAddress(e.target.value, true);
                 }, onChange: function (e) { return _this.onChangeInputValue(e.target.value); }, onKeyDown: function (e) {
                     if (e.which === 8 && !e.target.value) {
@@ -146,6 +155,8 @@ var ReactMultiEmail = /** @class */ (function (_super) {
                     }
                 }, onKeyUp: function (e) {
                     if (e.which === 13) {
+                        console.log(value);
+                        debugger;
                         _this.findEmailAddress(e.target.value, true);
                     }
                 } })));

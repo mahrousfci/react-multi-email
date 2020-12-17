@@ -12,13 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var defaultFqdnOptions = {
     requireTld: true,
     allowUnderscores: false,
-    allowTrailingDot: false,
+    allowTrailingDot: false
 };
 var defaultEmailOptions = {
     allowDisplayName: false,
     requireDisplayName: false,
     allowUtf8LocalPart: true,
-    requireTld: true,
+    requireTld: true
 };
 var displayName = /^[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~\.\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~\,\.\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s]*<(.+)>$/i;
 var emailUserPart = /^[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~]+$/i;
@@ -45,8 +45,7 @@ function isFQDN(str, options) {
     var parts = str.split('.');
     if (options.requireTld) {
         var tld = '' + parts.pop();
-        if (!parts.length ||
-            !/^([a-z\u00a1-\uffff]{2,}|xn[a-z0-9-]{2,})$/i.test(tld)) {
+        if (!parts.length || !/^([a-z\u00a1-\uffff]{2,}|xn[a-z0-9-]{2,})$/i.test(tld)) {
             return false;
         }
         // disallow spaces
@@ -74,9 +73,9 @@ function isFQDN(str, options) {
 }
 function isEmail(str, options) {
     options = __assign({}, options, defaultEmailOptions);
-	if (!/^[\x00-\x7F]+$/.test(str)) {
-		return false;
-	}
+    if (!/^[\x00-\x7F]+$/.test(str)) {
+        return false;
+    }
     if (options.requireDisplayName || options.allowDisplayName) {
         var displayEmail = str.match(displayName);
         if (displayEmail) {
@@ -101,13 +100,9 @@ function isEmail(str, options) {
     }
     if (user[0] === '"') {
         user = user.slice(1, user.length - 1);
-        return options.allowUtf8LocalPart
-            ? quotedEmailUserUtf8.test(user)
-            : quotedEmailUser.test(user);
+        return options.allowUtf8LocalPart ? quotedEmailUserUtf8.test(user) : quotedEmailUser.test(user);
     }
-    var pattern = options.allowUtf8LocalPart
-        ? emailUserUtf8Part
-        : emailUserPart;
+    var pattern = options.allowUtf8LocalPart ? emailUserUtf8Part : emailUserPart;
     var userParts = user.split('.');
     for (var i = 0; i < userParts.length; i++) {
         if (!pattern.test(userParts[i])) {
