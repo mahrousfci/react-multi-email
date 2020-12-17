@@ -46,6 +46,8 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
   }
 
   findEmailAddress = (value: string, isEnter?: boolean) => {
+    console.log(value);
+    debugger;
     let validEmails: string[] = [];
     let inputValue: string = '';
     const re = /[ ,;]/g;
@@ -66,13 +68,13 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
         let arr = value.split(re).filter(n => {
           return n !== '' && n !== undefined && n !== null;
         });
-
         do {
+          console.log(arr);
+          debugger;
           if (isEmail('' + arr[0])) {
             addEmails('' + arr.shift());
           } else {
             if (arr.length === 1) {
-              /// 마지막 아이템이면 inputValue로 남겨두기
               inputValue = '' + arr.shift();
             } else {
               arr.shift();
@@ -81,6 +83,8 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
         } while (arr.length);
       } else {
         if (isEnter) {
+          console.log(value);
+          debugger;
           if (isEmail(value)) {
             addEmails(value);
           } else {
@@ -103,6 +107,8 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
   };
 
   onChangeInputValue = (value: string) => {
+    console.log(value);
+    debugger;
     this.findEmailAddress(value);
   };
 
@@ -147,6 +153,8 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
           onFocus={(e: any) => this.setState({ focused: true })}
           onBlur={(e: any) => {
             this.setState({ focused: false });
+            console.log(value);
+            debugger;
             this.findEmailAddress(e.target.value, true);
           }}
           onChange={(e: any) => this.onChangeInputValue(e.target.value)}
@@ -157,6 +165,8 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
           }}
           onKeyUp={(e: any) => {
             if (e.which === 13) {
+              console.log(value);
+              debugger;
               this.findEmailAddress(e.target.value, true);
             }
           }}
