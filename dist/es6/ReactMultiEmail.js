@@ -99,7 +99,7 @@ class ReactMultiEmail extends React.Component {
                     if (ref) {
                         this.emailInput = ref;
                     }
-                }, type: "email", value: inputValue, placeholder: ((emails.length > 0) ? '' : placeholder), disabled: disabled, onFocus: (e) => this.setState({ focused: true }), onBlur: (e) => {
+                }, type: "email", className: (isEmail(inputValue) ? '' : 'invalid'), value: inputValue, placeholder: ((emails.length > 0) ? '' : placeholder), disabled: disabled, onFocus: (e) => this.setState({ focused: true }), onBlur: (e) => {
                     this.setState({ focused: false });
                     this.findEmailAddress(e.target.value, true);
                 }, onChange: (e) => this.onChangeInputValue(e.target.value), onKeyDown: (e) => {

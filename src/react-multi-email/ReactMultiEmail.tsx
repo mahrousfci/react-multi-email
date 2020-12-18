@@ -139,6 +139,7 @@ class ReactMultiEmail extends React.Component<IReactMultiEmailProps> {
             }
           }}
           type="email"
+          className={(isEmail(inputValue)?'': 'invalid')}
           value={inputValue}
           placeholder={((emails.length > 0) ? '' : placeholder )}
           disabled={disabled}
